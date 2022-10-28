@@ -1,8 +1,10 @@
-package com.example.chatapplication;
+package com.example.chatapplication.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.chatapplication.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -11,4 +13,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+
+
 }
