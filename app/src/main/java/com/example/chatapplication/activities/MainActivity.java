@@ -33,9 +33,12 @@ public class MainActivity extends AppCompatActivity {
         loadUserDerails();
         getToken();
         setListener();
+
     }
-    private void setListener(){
-        binding.imageSingOut.setOnClickListener(view->signOut());
+
+    private void setListener() {
+        binding.imageSingOut.setOnClickListener(view -> signOut());
+        binding.fabNewChat.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), UsersActivity.class)));
     }
 
     private void loadUserDerails() {
@@ -60,23 +63,23 @@ public class MainActivity extends AppCompatActivity {
                         preferenceManager.getString(Constants.KEY_USER_ID)
                 );
         documentReference.update(Constants.KEY_FCM_TOKEN, token)
-                .addOnSuccessListener(unused -> showToast("Token updated successfully"))
                 .addOnFailureListener(e -> showToast("Unable to update token"));
     }
-    private void signOut(){
+
+    private void signOut() {
         showToast("Sign out...");
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         DocumentReference documentReference = database.collection(Constants.KEY_COLLECTION_USERS).document(
                 preferenceManager.getString(Constants.KEY_USER_ID)
         );
-        HashMap<String,Object> updates = new HashMap<>();
+        HashMap<String, Object> updates = new HashMap<>();
         updates.put(Constants.KEY_FCM_TOKEN, FieldValue.delete());
         documentReference.update(updates)
                 .addOnSuccessListener(unused -> {
                     preferenceManager.clear();
-                    startActivity(new Intent(getApplicationContext(),SignInActivity.class));
+                    startActivity(new Intent(getApplicationContext(), SignInActivity.class));
                     finish();
-                }).addOnFailureListener(e->showToast("Unable to sign out"));
+                }).addOnFailureListener(e -> showToast("Unable to sign out"));
     }
 
 
