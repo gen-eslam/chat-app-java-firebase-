@@ -16,6 +16,13 @@
         app:layout_constraintBottom_toTopOf="@id/layoutSend"
         app:layout_constraintTop_toTopOf="parent"
         />
+    <View
+        android:id="@+id/headerBackground"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/primary"
+        app:layout_constraintBottom_toTopOf="@id/viewSupporter"
+        app:layout_constraintTop_toTopOf="parent"/>
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageBack"
         android:layout_width="@dimen/_30sdp"
@@ -25,6 +32,7 @@
         android:layout_marginTop="@dimen/_12sdp"
         android:padding="@dimen/_5sdp"
         android:src="@drawable/ic_back"
+        app:tint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 
@@ -38,6 +46,7 @@
         android:layout_marginTop="@dimen/_12sdp"
         android:padding="@dimen/_4sdp"
         android:src="@drawable/ic_info"
+        app:tint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 
@@ -51,7 +60,7 @@
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="1"
-        android:textColor="@color/primary_text"
+        android:textColor="@color/white"
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/imageBack"
@@ -59,6 +68,13 @@
         app:layout_constraintStart_toEndOf="@id/imageBack"
         app:layout_constraintTop_toTopOf="@id/imageBack"
 
+        />
+    <View
+        android:id="@+id/viewSupporter"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/_12sdp"
+        app:layout_constraintTop_toBottomOf="@id/imageBack"
         />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRecyclerView"
@@ -71,7 +87,7 @@
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="@id/viewBackground"
-        app:layout_constraintTop_toBottomOf="@+id/imageBack"/>
+        app:layout_constraintTop_toBottomOf="@+id/viewSupporter"/>
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="@dimen/_25sdp"
