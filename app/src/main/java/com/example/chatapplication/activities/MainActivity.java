@@ -13,7 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.chatapplication.adapters.*;
 import com.example.chatapplication.databinding.ActivityMainBinding;
+import com.example.chatapplication.listeners.ConversionListener;
 import com.example.chatapplication.models.ChatMessage;
+import com.example.chatapplication.models.User;
 import com.example.chatapplication.utilits.Constants;
 import com.example.chatapplication.utilits.PreferenceManager;
 import com.google.firebase.firestore.DocumentChange;
@@ -30,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ConversionListener {
     private ActivityMainBinding binding;
     private PreferenceManager preferenceManager;
     private List<ChatMessage> conversations;
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     void init() {
         conversations = new ArrayList<>();
-        conversationAdapter = new RecentConversationAdapter(conversations);
+        conversationAdapter = new RecentConversationAdapter(conversations,this);
         binding.conversationRecyclerView.setAdapter(conversationAdapter);
         database = FirebaseFirestore.getInstance();
     }
@@ -162,5 +164,10 @@ public class MainActivity extends AppCompatActivity {
                 }).addOnFailureListener(e -> showToast("Unable to sign out"));
     }
 
-
+    @Override
+    public void onConversionClicked(User user) {
+        Intent intent = new Intent(getApplicationContext(),ChatActivity.class);
+        intent.putExtra(Constants.KEY_USER,user);
+        startActivity(intent);
+    }
 }
