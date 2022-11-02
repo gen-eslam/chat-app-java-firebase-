@@ -29,24 +29,33 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if(viewType ==VIEW_TYPE_SENT)
-            return new SentMessageViewHolder(ItemContainerSentMessageBinding.inflate(LayoutInflater.from(parent.getContext())));
-        else
-            return new ReceivedMessageViewHolder(ItemContainerReceivedMessageBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false));
+        if (viewType == VIEW_TYPE_SENT) {
+            return new SentMessageViewHolder(
+                    ItemContainerSentMessageBinding
+                            .inflate(LayoutInflater
+                                    .from(parent.getContext()), parent, false));
+        } else {
+            return new ReceivedMessageViewHolder(
+                    ItemContainerReceivedMessageBinding
+                            .inflate(LayoutInflater
+                                    .from(parent.getContext()), parent, false));
+        }
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-    if(getItemViewType(position)==VIEW_TYPE_SENT){
-        ((SentMessageViewHolder) holder).setData(chatMessages.get(position));
-    }else {
-        ((ReceivedMessageViewHolder) holder).setData(chatMessages.get(position),receiverProfileImage);
-    }
+        if (getItemViewType(position) == VIEW_TYPE_SENT) {
+            ((SentMessageViewHolder) holder).setData(chatMessages.get(position));
+        } else {
+            ((ReceivedMessageViewHolder) holder).setData(chatMessages.get(position), receiverProfileImage);
+        }
     }
 
     @Override
     public int getItemCount() {
+
         return chatMessages.size();
+
     }
 
     @Override

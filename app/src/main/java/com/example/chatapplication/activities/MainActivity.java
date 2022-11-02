@@ -9,7 +9,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.chatapplication.adapters.RecentConversationAdapter;
 import com.example.chatapplication.databinding.ActivityMainBinding;
+import com.example.chatapplication.models.ChatMessage;
 import com.example.chatapplication.utilits.Constants;
 import com.example.chatapplication.utilits.PreferenceManager;
 import com.google.firebase.firestore.DocumentReference;
@@ -17,12 +19,17 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private PreferenceManager preferenceManager;
+    private List<ChatMessage> conversation;
+    private RecentConversationAdapter conversationAdapter;
+    private FirebaseFirestore database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +37,16 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         preferenceManager = new PreferenceManager(getApplicationContext());
+        init();
         loadUserDerails();
         getToken();
         setListener();
+    }
 
+    void init() {
+        conversation = new ArrayList<>();
+        conversationAdapter =new RecentConversationAdapter(conversation);
+        database = FirebaseFirestore.getInstance();
     }
 
     private void setListener() {
