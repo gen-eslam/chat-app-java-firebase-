@@ -6,6 +6,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,7 +29,9 @@ public class RecentConversationAdapter extends RecyclerView.Adapter<RecentConver
     public ConversionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ConversionViewHolder(
                 ItemContainerRecentConversionBinding.inflate(
-                        LayoutInflater.from(parent.getContext()), parent, false
+                        LayoutInflater.from(parent.getContext()),
+                        parent,
+                        false
                 )
         );
     }
@@ -42,7 +45,6 @@ public class RecentConversationAdapter extends RecyclerView.Adapter<RecentConver
     public int getItemCount() {
         return chatMessages.size();
     }
-
 
     class ConversionViewHolder extends RecyclerView.ViewHolder {
         ItemContainerRecentConversionBinding binding;
