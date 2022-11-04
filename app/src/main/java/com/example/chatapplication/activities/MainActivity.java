@@ -5,13 +5,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.chatapplication.adapters.*;
+import com.example.chatapplication.adapters.RecentConversationAdapter;
 import com.example.chatapplication.databinding.ActivityMainBinding;
 import com.example.chatapplication.listeners.ConversionListener;
 import com.example.chatapplication.models.ChatMessage;
@@ -32,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements ConversionListener {
+public class MainActivity extends BaseActivity implements ConversionListener {
     private ActivityMainBinding binding;
     private PreferenceManager preferenceManager;
     private List<ChatMessage> conversations;
@@ -54,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements ConversionListene
 
     void init() {
         conversations = new ArrayList<>();
-        conversationAdapter = new RecentConversationAdapter(conversations,this);
+        conversationAdapter = new RecentConversationAdapter(conversations, this);
         binding.conversationRecyclerView.setAdapter(conversationAdapter);
         database = FirebaseFirestore.getInstance();
     }
@@ -72,12 +69,12 @@ public class MainActivity extends AppCompatActivity implements ConversionListene
     }
 
 
-    private void listenConversations(){
+    private void listenConversations() {
         database.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
-                .whereEqualTo(Constants.KEY_SENDER_ID,preferenceManager.getString(Constants.KEY_USER_ID))
+                .whereEqualTo(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID))
                 .addSnapshotListener(eventListener);
         database.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
-                .whereEqualTo(Constants.KEY_RECEIVER_ID,preferenceManager.getString(Constants.KEY_USER_ID))
+                .whereEqualTo(Constants.KEY_RECEIVER_ID, preferenceManager.getString(Constants.KEY_USER_ID))
                 .addSnapshotListener(eventListener);
     }
 
@@ -87,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements ConversionListene
         }
         if (value != null) {
             for (DocumentChange documentChange : value.getDocumentChanges()) {
-                Log.d("fares",DocumentChange.Type.MODIFIED.toString() );
                 if (documentChange.getType() == DocumentChange.Type.ADDED) {
                     String senderId = documentChange.getDocument().getString(Constants.KEY_SENDER_ID);
                     String receiverId = documentChange.getDocument().getString(Constants.KEY_RECEIVER_ID);
@@ -118,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements ConversionListene
                     }
                 }
             }
-            Collections.sort(conversations,(obj1,obj2)->obj2.dateObject.compareTo(obj1.dateObject));
+            Collections.sort(conversations, (obj1, obj2) -> obj2.dateObject.compareTo(obj1.dateObject));
             conversationAdapter.notifyDataSetChanged();
             binding.conversationRecyclerView.smoothScrollToPosition(0);
             binding.conversationRecyclerView.setVisibility(View.VISIBLE);
@@ -166,8 +162,10 @@ public class MainActivity extends AppCompatActivity implements ConversionListene
 
     @Override
     public void onConversionClicked(User user) {
-        Intent intent = new Intent(getApplicationContext(),ChatActivity.class);
-        intent.putExtra(Constants.KEY_USER,user);
+        Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+        intent.putExtra(Constants.KEY_USER, user);
         startActivity(intent);
     }
+
+
 }

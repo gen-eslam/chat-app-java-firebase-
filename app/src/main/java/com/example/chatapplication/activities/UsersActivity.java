@@ -21,7 +21,7 @@ import org.checkerframework.common.returnsreceiver.qual.This;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsersActivity extends AppCompatActivity implements UserListener {
+public class UsersActivity extends BaseActivity implements UserListener {
 
     private ActivityUsersBinding binding;
     private PreferenceManager preferenceManager;
